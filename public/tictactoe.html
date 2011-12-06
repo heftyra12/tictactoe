@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tic Tac Toe</title>
+<style type="text/css">
+<!--td {
+   font-family:"Courier New", Courier, monospace;
+   font-size: 40px;
+   height:60px;
+   width: 60px;
+   text-align:center;
+   cursor:pointer;
+}
+.unselected {
+   /* does nothing */
+}
+.selectedX {
+   color:#000000;
+}
+.selectedO {
+   color:#999999;
+}
+#status {
+   font-size: 20px;
+}-->
+td.menu {font-family:Arial;
+        font-weight:bold;
+        background-color:white;
+        cursor:hand}
+a{
+    text-decoration:none;
+    color:black;
+}
+</style>
+<script type="text/javascript">
+function placeMarker(curPos)
+{
+var curMarker;
+if(curMarker==0)
+	curPos.style.background='red';
+else
+	curPos.style.background='green';
+curMarker++;
+}
+function selectlink(curPos){
+	if(curPos.style.background!='red')
+    	curPos.style.background='blue';
+
+    if (document.getElementById)
+      document.getElementById("selectdesc").innerHTML=linkdesc;
+    else
+      selectdesc.innerHTML=html;
+}
+function leavelink(curPos){
+	if(curPos.style.background!='red')
+    	curPos.style.background='white';
+
+    if (document.getElementById)
+      document.getElementById("selectdesc").innerHTML='&nbsp;';
+    else
+      selectdesc.innerHTML='&nbsp;';
+}
+</script>
+</head>
+<center>
+<h4>Tic Tac Toe</h4>
+<table id="tictactoe" cellspacing="0" cellpadding="0">
+   <tr>
+      <td style="border-right:2px solid #000;border-bottom:2px solid #000;"
+      id="cell0" onmouseover="selectlink(this)" onmouseout="leavelink(this)"
+      onclick="placeMarker(this)"
+      </td>
+      <td style="border-right:2px solid #000;border-bottom:2px solid #000;"
+      id="cell1" onmouseover="selectlink(this)" onmouseout="leavelink(this)">
+      </td>
+      <td style="border-bottom:2px solid #000;"
+      id="cell2" onmouseover="selectlink(this)" onmouseout="leavelink(this)">
+      </td>
+   </tr>
+   <tr>
+      <td style="border-right:2px solid #000;border-bottom:2px solid #000;"
+      id="cell3" onmouseover="selectlink(this)" onmouseout="leavelink(this)">
+      </td>
+      <td style="border-right:2px solid #000;border-bottom:2px solid #000;"
+      id="cell4" onmouseover="selectlink(this)" onmouseout="leavelink(this)">
+      </td>
+      <td style="border-bottom:2px solid #000;"
+      id="cell5" onmouseover="selectlink(this)" onmouseout="leavelink(this)">
+      </td>
+   </tr>
+   <tr>
+      <td style="border-right:2px solid #000;"
+      id="cell6" onmouseover="selectlink(this)" onmouseout="leavelink(this)">
+      </td>
+      <td style="border-right:2px solid #000;"
+      id="cell7" onmouseover="selectlink(this,'7')" onmouseout="leavelink(this)">
+      </td>
+      <td id="cell8" onmouseover="selectlink(this)" onmouseout="leavelink(this)">
+      </td>
+   </tr>
+</table>
+<div id="status"></div>
+<a href="one.html">Play Again</a>
+</center>
+<body>
+</body>
+</html>
