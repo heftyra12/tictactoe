@@ -3,6 +3,10 @@
 <head>
 <title>Tic Tac Toe</title>
 <style type="text/css">
+table {
+	border-spacing:0;
+}
+
 td {
    font-family:"Courier New", Courier, monospace;
    font-size: 40px;
@@ -12,6 +16,7 @@ td {
    border-width:5px;
    border-color:black;
 }
+
 
 #cell0,#cell1,#cell3,#cell4{
 border-style: none solid solid none;
@@ -23,6 +28,9 @@ border-style: none none solid none;
 
 #cell6,#cell7{
 border-style: none solid none none;
+}
+.hover{
+	background-color: gold;
 }
 </style>
 <script type="text/javascript" src="../scripts/jquery-1.4.js"></script>
@@ -45,18 +53,24 @@ var marker='X';
   });
 });
 function onHover(event) {
-	// $("div").html("Hover " + event.target.id);
+	$("div").html("Hover " + event.target.id);
 	$(event.target.id).val('HERE?');
+	$('tr').toggleClass('hover');
 }
 $(function(){
-	$('td').bind('mouseover mouseout',onHover);
-	$('td').hover(onHover);
+	// $('td').bind('mouseover mouseout',onHover);
+	$(event.target.id).addClass("hover");
+	// $("table tr:nth-child(even)").addClass("hover");
+	// $('td').hover(onHover);
+	// $('#playButton').click(function(){
+
+	}
 });
 </script>
 </head>
 <center>
 <h1>Tic Tac Toe</h1>
-<table id="tictactoe" cellspacing="0" cellpadding="0">
+<table id="tictactoe">
    <tr id="row1">
       <td id="cell0"></td><td id="cell1"></td><td id="cell2"></td>
    </tr>
@@ -67,7 +81,7 @@ $(function(){
       <td id="cell6"></td><td id="cell7"></td><td id="cell8"></td>
    </tr>
 </table>
-<a href="tictactoe.html">Play Again</a>
+<div><button type="button" id="playButton">Play Again</button></div>
 </center>
 <body>
 </body>
