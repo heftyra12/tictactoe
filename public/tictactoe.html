@@ -17,7 +17,6 @@ td {
    border-color:black;
 }
 
-
 #cell0,#cell1,#cell3,#cell4{
 border-style: none solid solid none;
 }
@@ -29,60 +28,59 @@ border-style: none none solid none;
 #cell6,#cell7{
 border-style: none solid none none;
 }
-.hover{
-	background-color: gold;
-}
+
+.clickedO{background-image:url('O.JPG');}
+.clickedX{background-image:url('X.JPG');}
+.hovered{background-color: lavender;}
 </style>
 <script type="text/javascript" src="../scripts/jquery-1.4.js"></script>
 <script type="text/javascript" src="../scripts/jqia2.support.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-var clickCount=0;
-var marker='X';
-  $('td').click(function(event){
-    if(clickCount%2==0){
-    	marker='X';
-	}
-	else{
-		marker='O';
-	}
-	$(event.target.id).val(marker);
-	$("div").html("Value " + event.target.val + " count " + clickCount);
-	$(event.target.id).unbind('hover');
-	clickCount++;
-  });
-});
-function onHover(event) {
-	$("div").html("Hover " + event.target.id);
-	$(event.target.id).val('HERE?');
-	$('tr').toggleClass('hover');
-}
-$(function(){
-	// $('td').bind('mouseover mouseout',onHover);
-	$(event.target.id).addClass("hover");
-	// $("table tr:nth-child(even)").addClass("hover");
-	// $('td').hover(onHover);
-	// $('#playButton').click(function(){
+	var clickCount=0;
 
-	}
+	$('td').one("click",function(event){
+		$(this).removeClass("hovered");
+		if(clickCount%2==0){
+			$(this).addClass("clickedX");
+		}else{
+			$(this).addClass("clickedO");
+		}
+		clickCount++;
+
+		$('#playButton').click(function(){
+			 $('td').removeClass("clickedO");
+			 $('td').removeClass("clickedX");
+			 //$('td').unbind("click");
+			 clickCount=0;
+			 // $('td').bind("hover");
+    	});
+	});
+
+	$('td').hover(
+		function(){$(this).addClass("hovered");},
+		function(){$(this).removeClass("hovered"); }
+	);
 });
 </script>
 </head>
+<body>
 <center>
 <h1>Tic Tac Toe</h1>
 <table id="tictactoe">
-   <tr id="row1">
+	<tbody>
+   <tr>
       <td id="cell0"></td><td id="cell1"></td><td id="cell2"></td>
    </tr>
-   <tr id="row2">
+   <tr>
       <td id="cell3"></td><td id="cell4"></td><td id="cell5"></td>
    </tr>
-   <tr id="row3">
+   <tr>
       <td id="cell6"></td><td id="cell7"></td><td id="cell8"></td>
    </tr>
+   </tbody>
 </table>
 <div><button type="button" id="playButton">Play Again</button></div>
 </center>
-<body>
 </body>
 </html>
