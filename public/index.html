@@ -1,74 +1,185 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Tic Tac Toe</title>
+<title>Tic Tac Toe - Rob Hefty</title>
 <style type="text/css">
+#tictactoe {
+	border-spacing:0;
+}
+#results {
+	border-spacing:10;
+	border-width:2px;
+   	border-color:black;
+   	border-style: solid;
+}
+table.r_fixed{
+	position:fixed;
+	top:100px;
+	left:450px;
+}
+table.l_fixed{
+	position:fixed;
+	top:100px;
+	left:50px;
+}
+button.center{
+	position:fixed;
+	top:300px;
+	left:450px;
+}
+
 td {
    font-family:"Courier New", Courier, monospace;
-   font-size: 40px;
+   font-size: 20px;
    height:100px;
    width: 100px;
    text-align:center;
    border-width:5px;
    border-color:black;
 }
-
 #cell0,#cell1,#cell3,#cell4{
-border-style: none solid solid none;
+	border-style: none solid solid none;
 }
-
 #cell2,#cell5{
-border-style: none none solid none;
+	border-style: none none solid none;
 }
-
 #cell6,#cell7{
-border-style: none solid none none;
+	border-style: none solid none none;
+}
+#xcell,#ocell,#catcell{
+	border-style: solid;
+   	border-width:2px;
+}
+.clickedO{
+	background-image:url('O.JPG');
+}
+.clickedX{
+	background-image:url('X.JPG');
+}
+.hovered{
+	background-image:url('Q.JPG');
 }
 </style>
 <script type="text/javascript" src="../scripts/jquery-1.4.js"></script>
 <script type="text/javascript" src="../scripts/jqia2.support.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
 var clickCount=0;
-var marker='X';
-  $('td').click(function(event){
-    if(clickCount%2==0){
-    	marker='X';
-	}
-	else{
-		marker='O';
-	}
-	$(event.target.id).val(marker);
-	$("div").html("Value " + event.target.val + " count " + clickCount);
-	$(event.target.id).unbind('hover');
-	clickCount++;
-  });
-});
-function onHover(event) {
-	// $("div").html("Hover " + event.target.id);
-	$(event.target.id).val('HERE?');
-}
-$(function(){
-	$('td').bind('mouseover mouseout',onHover);
-	$('td').hover(onHover);
+var boolWinner=new Boolean();
+$(document).ready(function(){
+	var cellArray=["a","a","a","a","a","a","a","a","a"];
+	var Xwins=0;
+	var Owins=0;
+	var Catwins=0;
+	boolWinner=false;
+
+	//$('table#tictactoe td').one("click",function(event){
+	$('table#tictactoe td').click(function(event){
+		var clickCell;
+		clickCell = $('table#tictactoe td').index(event.target);
+		$(this).unbind("hovered");
+		if(clickCount%2==0){
+			$(this).addClass("clickedX");
+			cellArray[clickCell]="X";
+			if((cellArray[0]=="X" && cellArray[1]=="X" && cellArray[2]=="X") ||
+				(cellArray[3]=="X" && cellArray[4]=="X" && cellArray[5]=="X") ||
+				(cellArray[6]=="X" && cellArray[7]=="X" && cellArray[8]=="X") ||
+
+				(cellArray[0]=="X" && cellArray[3]=="X" && cellArray[6]=="X") ||
+				(cellArray[1]=="X" && cellArray[4]=="X" && cellArray[7]=="X") ||
+				(cellArray[2]=="X" && cellArray[5]=="X" && cellArray[8]=="X") ||
+
+				(cellArray[0]=="X" && cellArray[4]=="X" && cellArray[8]=="X") ||
+				(cellArray[2]=="X" && cellArray[4]=="X" && cellArray[6]=="X"))
+			{
+				Xwins++;
+				document.getElementById('xcell').innerHTML=Xwins;
+				alert("X wins!");
+				boolWinner=true;
+				$('table#tictactoe td').unbind("click");
+				//$("div").html("X WINS!: "+cellArray.toString()+"  | has won: "+Xwins);
+			}
+		}else{
+			$(this).addClass("clickedO");
+			cellArray[clickCell]="O";
+			if((cellArray[0]=="O" && cellArray[1]=="O" && cellArray[2]=="O") ||
+				(cellArray[3]=="O" && cellArray[4]=="O" && cellArray[5]=="O") ||
+				(cellArray[6]=="O" && cellArray[7]=="O" && cellArray[8]=="O") ||
+
+				(cellArray[0]=="O" && cellArray[3]=="O" && cellArray[6]=="O") ||
+				(cellArray[1]=="O" && cellArray[4]=="O" && cellArray[7]=="O") ||
+				(cellArray[2]=="O" && cellArray[5]=="O" && cellArray[8]=="O") ||
+
+				(cellArray[0]=="O" && cellArray[4]=="O" && cellArray[8]=="O") ||
+				(cellArray[2]=="O" && cellArray[4]=="O" && cellArray[6]=="O"))
+			{
+					Owins++;
+					document.getElementById('ocell').innerHTML=Owins;
+					alert("O wins!");
+					boolWinner=true;
+					$('table#tictactoe td').unbind("click");
+			}
+		}
+		if((cellArray.indexOf("a")==-1)&&(boolWinner=false)){
+			Catwins++;
+			document.getElementById('catcell').innerHTML=Catwins;
+			alert("Cat game.");
+			$('table#tictactoe td').unbind("click");
+		}
+		clickCount++;
+		// $(($'table#tictactoe td').index(event.target)).unbind("click");
+		$(this).unbind("click");
+
+	});
+
+	$('#playButton').click(function(event){
+		$('table#tictactoe td').removeClass("clickedO");
+		$('table#tictactoe td').removeClass("clickedX");
+		clickCount=0;
+		cellArray=["a","a","a","a","a","a","a","a","a"];
+		boolWinner=false;
+		$('table#tictactoe td').bind("click");
+		$("div").html("HI");
+	});
+
+	$('table#tictactoe td').hover(
+		function(){$(this).addClass("hovered");},
+		function(){$(this).removeClass("hovered"); }
+	);
 });
 </script>
 </head>
+<body>
 <center>
 <h1>Tic Tac Toe</h1>
-<table id="tictactoe" cellspacing="0" cellpadding="0">
-   <tr id="row1">
-      <td id="cell0"></td><td id="cell1"></td><td id="cell2"></td>
-   </tr>
-   <tr id="row2">
-      <td id="cell3"></td><td id="cell4"></td><td id="cell5"></td>
-   </tr>
-   <tr id="row3">
-      <td id="cell6"></td><td id="cell7"></td><td id="cell8"></td>
-   </tr>
-</table>
-<a href="tictactoe.html">Play Again</a>
 </center>
-<body>
+<table id="tictactoe" class="l_fixed">
+	<tbody>
+	<tr>
+    	<td id="cell0"></td><td id="cell1"></td><td id="cell2"></td>
+   	</tr>
+   		<tr>
+   		<td id="cell3"></td><td id="cell4"></td><td id="cell5"></td>
+   	</tr>
+   	<tr>
+   		<td id="cell6"></td><td id="cell7"></td><td id="cell8"></td>
+   	</tr>
+   	</tbody>
+</table>
+<div></div>
+<table id="results" class="r_fixed">
+	<tbody>
+	<tr>
+		<th>X Wins</th>
+		<th>O Wins</th>
+		<th>Cat games</th>
+	</tr>
+	<tr>
+		<td id="xcell"></td>
+		<td id="ocell"></td>
+		<td id="catcell"></td>
+	</tr>
+</table>
+<br></br>
+<button type="button" id="playButton" class="center">Play Again</button>
 </body>
 </html>
