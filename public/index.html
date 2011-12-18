@@ -2,64 +2,7 @@
 <html>
 <head>
 <title>Tic Tac Toe - Rob Hefty</title>
-<style type="text/css">
-#tictactoe {
-	border-spacing:0;
-}
-#results {
-	border-spacing:10;
-	border-width:2px;
-   	border-color:black;
-   	border-style: solid;
-}
-table.r_fixed{
-	position:fixed;
-	top:100px;
-	left:450px;
-}
-table.l_fixed{
-	position:fixed;
-	top:100px;
-	left:50px;
-}
-button.center{
-	position:fixed;
-	top:300px;
-	left:450px;
-}
-
-td {
-   font-family:"Courier New", Courier, monospace;
-   font-size: 20px;
-   height:100px;
-   width: 100px;
-   text-align:center;
-   border-width:5px;
-   border-color:black;
-}
-#cell0,#cell1,#cell3,#cell4{
-	border-style: none solid solid none;
-}
-#cell2,#cell5{
-	border-style: none none solid none;
-}
-#cell6,#cell7{
-	border-style: none solid none none;
-}
-#xcell,#ocell,#catcell{
-	border-style: solid;
-   	border-width:2px;
-}
-.clickedO{
-	background-image:url('O.JPG');
-}
-.clickedX{
-	background-image:url('X.JPG');
-}
-.hovered{
-	background-image:url('Q.JPG');
-}
-</style>
+<link rel="stylesheet" type="text/css" href="stylesheets/tic_tac_style.css" />
 <script type="text/javascript" src="../scripts/jquery-1.4.js"></script>
 <script type="text/javascript" src="../scripts/jqia2.support.js"></script>
 <script type="text/javascript">
