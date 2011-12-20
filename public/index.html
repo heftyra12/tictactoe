@@ -8,87 +8,83 @@
 <script type="text/javascript">
 var clickCount=0;
 var boolWinner=new Boolean();
+var cellArray=["a","a","a","a","a","a","a","a","a"];
+$('table#tictactoe td').bind('click, hover',function(event){});
 $(document).ready(function(){
-	var cellArray=["a","a","a","a","a","a","a","a","a"];
 	var Xwins=0;
 	var Owins=0;
 	var Catwins=0;
 	boolWinner=false;
+	document.getElementById('xcell').innerHTML=Xwins;
+	document.getElementById('ocell').innerHTML=Owins;
+	document.getElementById('catcell').innerHTML=Catwins;
 
-	//$('table#tictactoe td').one("click",function(event){
 	$('table#tictactoe td').click(function(event){
-		var clickCell;
-		clickCell = $('table#tictactoe td').index(event.target);
-		$(this).unbind("hovered");
+		var clickCell = $('table#tictactoe td').index(event.target);
+		$(this).unbind("click, hover",function(){});
+		$('table#tictactoe td').removeClass("hovered");
 		if(clickCount%2==0){
-			$(this).addClass("clickedX");
+			$(this).addClass('clickedX');
 			cellArray[clickCell]="X";
-			if((cellArray[0]=="X" && cellArray[1]=="X" && cellArray[2]=="X") ||
-				(cellArray[3]=="X" && cellArray[4]=="X" && cellArray[5]=="X") ||
-				(cellArray[6]=="X" && cellArray[7]=="X" && cellArray[8]=="X") ||
-
-				(cellArray[0]=="X" && cellArray[3]=="X" && cellArray[6]=="X") ||
-				(cellArray[1]=="X" && cellArray[4]=="X" && cellArray[7]=="X") ||
-				(cellArray[2]=="X" && cellArray[5]=="X" && cellArray[8]=="X") ||
-
-				(cellArray[0]=="X" && cellArray[4]=="X" && cellArray[8]=="X") ||
-				(cellArray[2]=="X" && cellArray[4]=="X" && cellArray[6]=="X"))
-			{
-				Xwins++;
-				document.getElementById('xcell').innerHTML=Xwins;
-				alert("X wins!");
-				boolWinner=true;
-				$('table#tictactoe td').unbind("click");
-				//$("div").html("X WINS!: "+cellArray.toString()+"  | has won: "+Xwins);
+			if(checkForWinner("X")){
+				resetWinner("xcell",Xwins,"X wins!",true);
 			}
 		}else{
-			$(this).addClass("clickedO");
+			$(this).addClass('clickedO');
 			cellArray[clickCell]="O";
-			if((cellArray[0]=="O" && cellArray[1]=="O" && cellArray[2]=="O") ||
-				(cellArray[3]=="O" && cellArray[4]=="O" && cellArray[5]=="O") ||
-				(cellArray[6]=="O" && cellArray[7]=="O" && cellArray[8]=="O") ||
-
-				(cellArray[0]=="O" && cellArray[3]=="O" && cellArray[6]=="O") ||
-				(cellArray[1]=="O" && cellArray[4]=="O" && cellArray[7]=="O") ||
-				(cellArray[2]=="O" && cellArray[5]=="O" && cellArray[8]=="O") ||
-
-				(cellArray[0]=="O" && cellArray[4]=="O" && cellArray[8]=="O") ||
-				(cellArray[2]=="O" && cellArray[4]=="O" && cellArray[6]=="O"))
-			{
-					Owins++;
-					document.getElementById('ocell').innerHTML=Owins;
-					alert("O wins!");
-					boolWinner=true;
-					$('table#tictactoe td').unbind("click");
+			if(checkForWinner("O")){
+				resetWinner("ocell",Owins,"O wins!",true);
 			}
 		}
-		if((cellArray.indexOf("a")==-1)&&(boolWinner=false)){
-			Catwins++;
-			document.getElementById('catcell').innerHTML=Catwins;
-			alert("Cat game.");
-			$('table#tictactoe td').unbind("click");
+		if((cellArray.indexOf("a")==-1)&&(boolWinner==false)){
+			resetWinner("catcell",Catwins,"Cat game.",false);
 		}
 		clickCount++;
-		// $(($'table#tictactoe td').index(event.target)).unbind("click");
-		$(this).unbind("click");
+		//$('table#tictactoe td').unbind('click',function(event){});
 
 	});
 
 	$('#playButton').click(function(event){
-		$('table#tictactoe td').removeClass("clickedO");
-		$('table#tictactoe td').removeClass("clickedX");
-		clickCount=0;
-		cellArray=["a","a","a","a","a","a","a","a","a"];
+		$('table#tictactoe td').bind('click',function(event){});
+		$('td').removeClass();
 		boolWinner=false;
-		$('table#tictactoe td').bind("click");
-		$("div").html("HI");
+		resetGame();
 	});
 
 	$('table#tictactoe td').hover(
-		function(){$(this).addClass("hovered");},
-		function(){$(this).removeClass("hovered"); }
+		function(){$(this).addClass('hovered');},
+		function(){$(this).removeClass('hovered');}
 	);
 });
+
+checkForWinner=function(XorO){
+	if((cellArray[0]==XorO && cellArray[1]==XorO && cellArray[2]==XorO) ||
+		(cellArray[3]==XorO && cellArray[4]==XorO && cellArray[5]==XorO) ||
+		(cellArray[6]==XorO && cellArray[7]==XorO && cellArray[8]==XorO) ||
+		(cellArray[0]==XorO && cellArray[3]==XorO && cellArray[6]==XorO) ||
+		(cellArray[1]==XorO && cellArray[4]==XorO && cellArray[7]==XorO) ||
+		(cellArray[2]==XorO && cellArray[5]==XorO && cellArray[8]==XorO) ||
+		(cellArray[0]==XorO && cellArray[4]==XorO && cellArray[8]==XorO) ||
+		(cellArray[2]==XorO && cellArray[4]==XorO && cellArray[6]==XorO)){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+resetWinner=function(cell,winCount,msg,winTF){
+	boolWinner=winTF;
+	winCount++;
+	document.getElementById(cell).innerHTML=winCount;
+	alert(msg);
+	$('table#tictactoe td').unbind('click',function(){});
+	resetGame();
+}
+
+resetGame=function(){
+	clickCount=0;
+	cellArray=["a","a","a","a","a","a","a","a","a"];
+}
 </script>
 </head>
 <body>
