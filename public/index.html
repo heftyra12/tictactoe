@@ -21,8 +21,6 @@ $(document).ready(function(){
 
 	$('table#tictactoe td').click(function(event){
 		var clickCell = $('table#tictactoe td').index(event.target);
-		$(this).unbind("click, hover",function(){});
-		$('table#tictactoe td').removeClass("hovered");
 		if(clickCount%2==0){
 			$(this).addClass('clickedX');
 			cellArray[clickCell]="X";
@@ -40,15 +38,15 @@ $(document).ready(function(){
 			resetWinner("catcell",Catwins,"Cat game.",false);
 		}
 		clickCount++;
-		//$('table#tictactoe td').unbind('click',function(event){});
+		$(this).unbind('click');
 
 	});
 
 	$('#playButton').click(function(event){
-		$('table#tictactoe td').bind('click',function(event){});
-		$('td').removeClass();
+		$('table#tictactoe td').removeClass();
 		boolWinner=false;
 		resetGame();
+		$('table#tictactoe td').bind('click',function(event){});
 	});
 
 	$('table#tictactoe td').hover(
@@ -77,7 +75,7 @@ resetWinner=function(cell,winCount,msg,winTF){
 	winCount++;
 	document.getElementById(cell).innerHTML=winCount;
 	alert(msg);
-	$('table#tictactoe td').unbind('click',function(){});
+	$('table#tictactoe td').unbind('click');
 	resetGame();
 }
 
